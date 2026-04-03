@@ -16,7 +16,6 @@
       width:100vw;
       background-color: #f0f0f0;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       flex-wrap: wrap;
@@ -35,15 +34,30 @@
     }
 
     .sub-title {
-      font-size: 3em;
+      font-size: 4em;
       margin: 20px;
     }
+
+    .list {
+      font-size: 3em;
+      margin: 40px;
+      padding: 20px;
+    }
+    
   </style>
 </head>
 <body>
-  <article class="canvas">
+  <article class="canvas" hidden>
       <h1 class="title">Presentation</h1>
       <p class="sub-title">This is the presentation page.</p>
+  </article>
+  <article class="canvas">
+      <h2 class="sub-title">Overview</h2>
+      <ul class="list">
+        <li class="item">slide 1</li>
+        <li class="item">slide 2</li>
+        <li class="item">slide 3</li>
+      </ul>
   </article>
 </body>
 </html>
