@@ -1,0 +1,128 @@
+:root {
+  --bg: #1C1C1C;
+  --accent: #5A0F1C;
+  --gold: #C9A44C;
+  --text: #EDEDED;
+  --muted: #A1A1A1;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--bg);
+  font-family: "Georgia", serif;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+
+/* SLIDE BASE */
+.slide {
+  width: 80vw;
+  height: 80vh;
+  padding: 60px;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background:
+    linear-gradient(rgba(0,0,0,0.85), rgba(20,0,0,0.8)),
+    url("https://upload.wikimedia.org/wikipedia/commons/5/5f/Cluedo_board.jpg");
+  background-size: cover;
+  color: var(--text);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  animation: fade 0.6s ease;
+}
+
+/* TYPOGRAPHY */
+.title {
+  font-size: 3.2rem;
+  color: var(--gold);
+  letter-spacing: 1px;
+}
+
+.subtitle {
+  font-family: system-ui;
+  color: var(--muted);
+  margin-top: 10px;
+}
+
+.list {
+  margin-top: 30px;
+  font-family: system-ui;
+  line-height: 1.8;
+  font-size: 1.2rem;
+}
+
+/* CASE FILE ELEMENTS */
+.stamp {
+  position:absolute;
+  top:20px;
+  right:20px;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  padding: 6px 12px;
+  transform: rotate(-15deg);
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.label {
+  position:absolute;
+  top:20px;
+  left:20px;
+  color: var(--gold);
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+}
+
+/* RED STRING EFFECT */
+.lines::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(120deg, transparent 48%, rgba(200,0,0,0.3) 50%, transparent 52%),
+    linear-gradient(60deg, transparent 48%, rgba(200,0,0,0.3) 50%, transparent 52%);
+  pointer-events:none;
+}
+
+/* HIGHLIGHT */
+.highlight {
+  color: var(--gold);
+  text-shadow: 0 0 8px rgba(201,164,76,0.5);
+}
+
+/* TYPEWRITER */
+.typewriter {
+  overflow: hidden;
+  border-right: 2px solid var(--gold);
+  white-space: nowrap;
+  animation: typing 2s steps(30), blink 0.5s step-end infinite alternate;
+}
+
+@keyframes typing {
+  from { width:0 }
+  to { width:100% }
+}
+
+@keyframes blink {
+  50% { border-color: transparent }
+}
+
+/* ANIMATION */
+@keyframes fade {
+  from { opacity:0; transform:scale(0.98);}
+  to { opacity:1; transform:scale(1);}
+}
+
+.hidden { display:none; }
+.center { text-align:center; align-items:center; }
+
+hr {
+  border:none;
+  border-top:1px solid rgba(255,255,255,0.2);
+  margin:20px 0;
+}

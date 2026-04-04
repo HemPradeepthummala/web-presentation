@@ -3,67 +3,141 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script type="module" src="./presentation.js"></script>
-    <title>Presentation</title>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        height: 100vh;
-        width: 100vw;
-        background-color: #f0f0f0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-      }
-
-      .slide {
-        height: 80vh;
-        width: 80vw;
-        background-color: whitesmoke;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-      }
-
-      .title {
-        font-size: 5em;
-        margin: 20px;
-      }
-
-      .sub-title {
-        font-size: 4em;
-        margin: 20px;
-      }
-
-      .list {
-        font-size: 3em;
-        margin: 40px;
-        padding: 20px;
-      }
-
-      .hidden {
-        display: none;
-      }
-    </style>
+    <title>Cluedo – The Deductives</title>
+    <script src="./presentation.js"></script>
+    <link rel="stylesheet" href="./style.css" />
   </head>
+
   <body>
     <main>
-      <article class="slide">
-        <h1 class="title">Presentation</h1>
-        <p class="sub-title">This is the presentation page.</p>
-      </article>
-      <article class="slide hidden">
-        <h2 class="sub-title">Overview</h2>
+      <!-- 1 -->
+      <section class="slide center lines">
+        <div class="label">CASE FILE 001</div>
+        <div class="stamp">CONFIDENTIAL</div>
+        <h1 class="title typewriter">Cluedo</h1>
+        <p class="subtitle">The Deductives</p>
+        <hr />
+        <p class="list">
+          Mohanthi (BA), Hem Pradeep (QA)<br />
+          Umar, Javed, Rahul, Sagnik, Nitesh, Vismaya
+        </p>
+      </section>
+
+      <!-- 2 -->
+      <section class="slide hidden lines">
+        <div class="label">CASE OVERVIEW</div>
+        <h1 class="title">Agenda</h1>
         <ul class="list">
-          <li class="item">slide 1</li>
-          <li class="item">slide 2</li>
-          <li class="item">slide 3</li>
+          <li>Iteration Investigation</li>
+          <li>Story Status</li>
+          <li>Analysis</li>
+          <li>Next Plan</li>
+          <li>Demonstration</li>
         </ul>
-      </article>
+      </section>
+
+      <!-- 3 -->
+      <section class="slide hidden lines">
+        <div class="label">EVIDENCE LOG</div>
+        <h1 class="title">Progress</h1>
+        <ul class="list">
+          <li>Dice movement – 2 pts</li>
+          <li>Secret passage – 1 pt</li>
+          <li>Suspicion – 2 pts</li>
+          <li>Accusation – 2 pts</li>
+          <li class="highlight">Victory logic implemented</li>
+        </ul>
+      </section>
+
+      <!-- 4 -->
+      <section class="slide hidden">
+        <div class="label">FORENSICS</div>
+        <h1 class="title">Stats</h1>
+        <ul class="list">
+          <li>Coverage: <span class="highlight">80%</span></li>
+          <li>Backend: 500 LoC</li>
+          <li>Frontend: 300 LoC</li>
+          <li>Tests: 200 LoC</li>
+        </ul>
+      </section>
+
+      <!-- 5 -->
+      <section class="slide hidden">
+        <div class="label">SYSTEM DESIGN</div>
+        <h1 class="title">Architecture</h1>
+        <p class="list">MVC with REST APIs</p>
+      </section>
+
+      <!-- 6 -->
+      <section class="slide hidden">
+        <div class="label">ISSUES FOUND</div>
+        <h1 class="title">Code Smells</h1>
+        <ul class="list">
+          <li>Long methods</li>
+          <li>Lazy classes</li>
+          <li>Shotgun surgery</li>
+        </ul>
+      </section>
+
+      <!-- 7 -->
+      <section class="slide hidden">
+        <div class="label">DEBT REPORT</div>
+        <h1 class="title">Tech Debt</h1>
+        <ul class="list">
+          <li>No error handling</li>
+          <li>No persistence</li>
+          <li>Single session only</li>
+        </ul>
+      </section>
+
+      <!-- 8 -->
+      <section class="slide hidden">
+        <div class="label">TOOLS USED</div>
+        <h1 class="title">Techniques</h1>
+        <ul class="list">
+          <li>Local storage</li>
+          <li>Inkscape</li>
+          <li>Mermaid diagrams</li>
+        </ul>
+      </section>
+
+      <!-- 9 -->
+      <section class="slide hidden">
+        <div class="label">INSIGHTS</div>
+        <h1 class="title">Learnings</h1>
+        <ul class="list">
+          <li>Refactoring is crucial</li>
+          <li>Communication matters</li>
+          <li>Planning improves delivery</li>
+        </ul>
+      </section>
+
+      <!-- 10 -->
+      <section class="slide hidden">
+        <div class="label">NEXT CASE</div>
+        <h1 class="title">Iteration Plan</h1>
+        <ul class="list">
+          <li>Lobby system</li>
+          <li>Game log</li>
+          <li>Detective notes</li>
+          <li class="highlight">Total: 10 points</li>
+        </ul>
+      </section>
+
+      <!-- 11 -->
+      <section class="slide center hidden">
+        <div class="label">LIVE DEMO</div>
+        <h1 class="title">Demonstration</h1>
+        <p class="subtitle">Uncovering the system in action</p>
+      </section>
+
+      <!-- 12 -->
+      <section class="slide center hidden">
+        <div class="label">CASE CLOSED</div>
+        <div class="stamp">RESOLVED</div>
+        <h1 class="title">Thank You</h1>
+        <p class="subtitle">Questions?</p>
+      </section>
     </main>
   </body>
 </html>
