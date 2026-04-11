@@ -1,0 +1,611 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cluedo — The Deductives · Iteration 4</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Jost:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --cream: #fdf8f2;
+        --mahogany: #2c1a0e;
+        --gold: #c9a46e;
+        --gold-light: #e8d5b0;
+        --warm-gray: #f0ebe3;
+        --mid-gray: #8a7f74;
+        --dark: #1a1208;
+        --green: #4a7c59;
+        --purple: #6b5b95;
+        --blue: #3a6b9e;
+        --pink: #d4608f;
+        --ff-serif: "Playfair Display", serif;
+        --ff-ui: "Jost", sans-serif;
+        --ff-mono: "JetBrains Mono", monospace;
+        --slide-w: 1280px;
+        --slide-h: 720px;
+      }
+      body {
+        background: #1a1208;
+        font-family: var(--ff-ui);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        padding: 0;
+      }
+
+      /* ── Shell ── */
+      #shell {
+        width: 100%;
+        max-width: 1400px;
+        padding: 16px;
+      }
+      #header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 0 16px;
+        color: var(--gold);
+      }
+      #header .logo {
+        font-family: var(--ff-serif);
+        font-size: 18px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+      }
+      #header .info {
+        font-size: 12px;
+        color: var(--gold-light);
+        opacity: 0.6;
+        font-family: var(--ff-mono);
+      }
+
+      /* ── Stage ── */
+      #stage {
+        width: 100%;
+        aspect-ratio: 16/9;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 32px 80px rgba(0, 0, 0, 0.7);
+        position: relative;
+        background: var(--cream);
+      }
+      #stage > * {
+        display: none;
+        width: 100%;
+        height: 100%;
+      }
+      #stage > .active {
+        display: flex;
+      }
+
+      /* ── Nav ── */
+      #nav {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin: 16px 0;
+      }
+      .nav-btn {
+        padding: 8px 20px;
+        border-radius: 8px;
+        border: 1px solid var(--gold);
+        background: transparent;
+        color: var(--gold);
+        font-family: var(--ff-ui);
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.15s;
+        letter-spacing: 0.04em;
+      }
+      .nav-btn:hover {
+        background: var(--gold);
+        color: var(--mahogany);
+      }
+      .nav-btn:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+      }
+      #counter {
+        font-family: var(--ff-mono);
+        font-size: 13px;
+        color: var(--gold-light);
+        opacity: 0.7;
+        min-width: 64px;
+        text-align: center;
+      }
+      #thumb-strip {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        padding: 8px 0 12px;
+        width: 100%;
+        scrollbar-width: thin;
+        scrollbar-color: var(--gold) transparent;
+      }
+      #thumb-strip::-webkit-scrollbar {
+        height: 3px;
+      }
+      #thumb-strip::-webkit-scrollbar-thumb {
+        background: var(--gold);
+        border-radius: 2px;
+      }
+      .thumb {
+        flex-shrink: 0;
+        width: 120px;
+        aspect-ratio: 16/9;
+        border-radius: 6px;
+        overflow: hidden;
+        border: 2px solid transparent;
+        cursor: pointer;
+        position: relative;
+        background: #2a1d10;
+      }
+      .thumb:hover,
+      .thumb.active {
+        border-color: var(--gold);
+      }
+      .thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.7;
+      }
+      .thumb.active img {
+        opacity: 1;
+      }
+      .thumb-n {
+        position: absolute;
+        bottom: 3px;
+        left: 5px;
+        font-size: 9px;
+        font-family: var(--ff-mono);
+        color: var(--gold);
+        opacity: 0.8;
+      }
+
+      /* ── Global slide base ── */
+      .slide {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        overflow: hidden;
+        font-family: var(--ff-ui);
+        background: var(--cream);
+        color: var(--mahogany);
+      }
+
+      /* ── Section header badge ── */
+      .section-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--gold);
+      }
+      .section-badge::before {
+        content: "";
+        width: 24px;
+        height: 2px;
+        background: var(--gold);
+      }
+
+      /* ── Slide title style (left big text) ── */
+      .slide-title {
+        font-family: var(--ff-serif);
+        font-size: clamp(28px, 4.5vw, 58px);
+        font-weight: 700;
+        color: var(--mahogany);
+        line-height: 1.1;
+      }
+
+      /* ── Code block ── */
+      .code-block {
+        background: #1e1410;
+        border-radius: 8px;
+        padding: 16px 20px;
+        font-family: var(--ff-mono);
+        font-size: clamp(10px, 1.1vw, 14px);
+        color: #e8d5b0;
+        line-height: 1.7;
+        border-left: 3px solid var(--gold);
+        overflow: auto;
+      }
+      .code-kw {
+        color: #fa8072;
+      }
+      .code-fn {
+        color: #c9a46e;
+      }
+      .code-str {
+        color: #98d8a0;
+      }
+      .code-op {
+        color: #88aacc;
+      }
+      .code-cm {
+        color: #666;
+        font-style: italic;
+      }
+
+      /* ── Smell/debt card ── */
+      .smell-card {
+        display: grid;
+        grid-template-columns: 6px 160px 1fr;
+        align-items: stretch;
+        background: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid #e8e0d5;
+      }
+      .smell-bar {
+        background: var(--bar-color, var(--purple));
+      }
+      .smell-label {
+        padding: 20px 16px;
+        display: flex;
+        align-items: center;
+        font-family: var(--ff-serif);
+        font-size: clamp(14px, 1.6vw, 20px);
+        font-weight: 700;
+        color: var(--mahogany);
+        line-height: 1.2;
+      }
+      .smell-desc {
+        padding: 20px 16px;
+        display: flex;
+        align-items: center;
+        font-size: clamp(12px, 1.2vw, 15px);
+        color: #4a3a2a;
+        line-height: 1.5;
+        border-left: 1px solid #f0e8dc;
+      }
+
+      /* ── Agenda grid ── */
+      .agenda-card {
+        background: #fff;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        padding: 20px 24px;
+        font-size: clamp(13px, 1.4vw, 18px);
+        font-weight: 500;
+        color: var(--mahogany);
+        cursor: default;
+        transition: border-color 0.15s;
+        border: 1.5px solid #e8e0d5;
+      }
+
+      /* ── Bullet list ── */
+      .bul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .bul li {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+        font-size: clamp(11px, 1.2vw, 14px);
+        line-height: 1.5;
+        color: #3a2a1a;
+      }
+      .bul li::before {
+        content: "";
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--gold);
+        flex-shrink: 0;
+        margin-top: 6px;
+      }
+
+      /* ── Content panel ── */
+      .panel {
+        background: #fff;
+        border-radius: 12px;
+        padding: 20px 22px;
+        border: 1px solid #e8e0d5;
+        height: 100%;
+        overflow: hidden;
+      }
+      .panel-hdr {
+        font-size: clamp(12px, 1.4vw, 16px);
+        font-weight: 700;
+        color: var(--mahogany);
+        margin-bottom: 12px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid var(--gold-light);
+      }
+
+      /* ── Stats ── */
+      .stat-box {
+        text-align: center;
+      }
+      .stat-n {
+        font-family: var(--ff-serif);
+        font-size: clamp(36px, 5vw, 72px);
+        font-weight: 700;
+        color: var(--gold);
+      }
+      .stat-l {
+        font-size: clamp(10px, 1.1vw, 13px);
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--mid-gray);
+      }
+
+      /* ── Image frames ── */
+      .img-frame {
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid #e8e0d5;
+        background: #f5f0e8;
+      }
+      .img-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      /* ── Tag chip ── */
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: clamp(10px, 1vw, 13px);
+        font-weight: 600;
+        letter-spacing: 0.04em;
+      }
+      .tag-gold {
+        background: #f5e8d0;
+        color: #7a5020;
+        border: 1px solid var(--gold-light);
+      }
+      .tag-green {
+        background: #e8f5ee;
+        color: #1a5c35;
+        border: 1px solid #a8d5b8;
+      }
+      .tag-purple {
+        background: #eeecf8;
+        color: #3a2a7a;
+        border: 1px solid #c5bef0;
+      }
+
+      /* ── Two-tone header panel (like slide 3) ── */
+      .col-header {
+        padding: 14px 18px;
+        font-size: clamp(13px, 1.5vw, 18px);
+        font-weight: 700;
+        border-radius: 10px 10px 0 0;
+      }
+      .col-header.green {
+        background: var(--green);
+        color: #fff;
+      }
+      .col-header.purple {
+        background: var(--purple);
+        color: #fff;
+      }
+
+      /* ── Section divider slide ── */
+      .section-slide {
+        background: var(--mahogany);
+        color: var(--cream);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: 16px;
+      }
+      .section-slide .big {
+        font-family: var(--ff-serif);
+        font-size: clamp(36px, 6vw, 80px);
+        font-weight: 700;
+        color: var(--cream);
+      }
+      .section-slide .sub {
+        font-size: clamp(12px, 1.4vw, 18px);
+        color: var(--gold);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        font-weight: 500;
+      }
+
+      /* ── Keyboard hint ── */
+      #kbd-hint {
+        font-size: 11px;
+        color: var(--gold-light);
+        opacity: 0.4;
+        font-family: var(--ff-mono);
+        margin-top: 4px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="shell">
+      <div id="header">
+        <div class="logo">Cluedo &mdash; The Deductives</div>
+        <div class="info">Iteration 4 &middot; Sprint Review</div>
+      </div>
+      <div id="stage">
+        <!-- ═══════════════════════════════════════════════════════
+     SLIDE 1 — TITLE
+═══════════════════════════════════════════════════════ -->
+        <cluedo-title class="active"></cluedo-title>
+
+        <!-- ═══════════════════════════════════════════════════════
+     SLIDE 2 — AGENDA
+═══════════════════════════════════════════════════════ -->
+        <cluedo-agenda></cluedo-agenda>
+
+        <!-- ═══════════════════════════════════════════════════════
+     SLIDE 3 — CURRENT ITERATION
+═══════════════════════════════════════════════════════ -->
+        <cluedo-current-iteration></cluedo-current-iteration>
+
+        <!-- ═══════════════════════════════════════════════════════
+     SLIDE 4 — ITERATION ANALYSIS (chart)
+═══════════════════════════════════════════════════════ -->
+        <cluedo-iteration-analysis></cluedo-iteration-analysis>
+
+        <!-- ═══════════════════════════════════════════════════════
+     SLIDE 5 — GAME ARCHITECTURE (diagram)
+═══════════════════════════════════════════════════════ -->
+        <cluedo-game-architecture></cluedo-game-architecture>
+
+        <!-- ═══════════════════════════════════════════════════════
+     SLIDE 6 — CODE SMELLS
+═══════════════════════════════════════════════════════ -->
+        <cluedo-code-smells></cluedo-code-smells>
+
+        <!-- ═══════════════════════════════════════════════════════
+     SLIDE 7 — TECH DEBT
+═══════════════════════════════════════════════════════ -->
+        <cluedo-tech-debt></cluedo-tech-debt>
+
+        <!-- ═══════════════════════════════════════════════════════
+     SLIDE 8 — TOOLS & TECHNIQUES
+═══════════════════════════════════════════════════════ -->
+        <cluedo-tools></cluedo-tools>
+
+        <!-- ═══════════════════════════════════════════════════════
+     SLIDE 9 — LEARNINGS
+═══════════════════════════════════════════════════════ -->
+        <cluedo-learnings></cluedo-learnings>
+
+        <!-- ═══════════════════════════════════════════════════════
+     SLIDE 10 — NEXT ITERATION
+═══════════════════════════════════════════════════════ -->
+        <cluedo-next-iteration></cluedo-next-iteration>
+
+        <!-- ═══════════════════════════════════════════════════════
+     SLIDE 11 — IMPROVEMENTS DIVIDER
+═══════════════════════════════════════════════════════ -->
+        <cluedo-improvements-divider></cluedo-improvements-divider>
+
+        <!-- ═══════════════════════════════════════════════════════
+     SLIDE 12 — ITERATION 1 (screenshots)
+═══════════════════════════════════════════════════════ -->
+        <cluedo-iter1></cluedo-iter1>
+
+        <!-- ═══════════════════════════════════════════════════════
+     SLIDE 13 — ITERATION 1 board
+═══════════════════════════════════════════════════════ -->
+        <cluedo-iter1b></cluedo-iter1b>
+
+        <!-- ═══════════════════════════════════════════════════════
+     SLIDE 14 — ITERATION 2 (Perform Actions)
+═══════════════════════════════════════════════════════ -->
+        <cluedo-iter2></cluedo-iter2>
+
+        <!-- ═══════════════════════════════════════════════════════
+     SLIDE 15 — ITERATION 2b
+═══════════════════════════════════════════════════════ -->
+        <cluedo-iter2b></cluedo-iter2b>
+
+        <!-- ═══════════════════════════════════════════════════════
+     SLIDE 16 — ROLL DICE / SUSPECT
+═══════════════════════════════════════════════════════ -->
+        <cluedo-roll-suspect></cluedo-roll-suspect>
+
+        <!-- ═══════════════════════════════════════════════════════
+     SLIDE 17 — ACCUSE
+═══════════════════════════════════════════════════════ -->
+        <cluedo-accuse></cluedo-accuse>
+
+        <!-- ═══════════════════════════════════════════════════════
+     SLIDE 18 — ITERATION 3 (Multiplayer)
+═══════════════════════════════════════════════════════ -->
+        <cluedo-iter3></cluedo-iter3>
+
+        <!-- ═══════════════════════════════════════════════════════
+     SLIDE 19 — JOIN PLAYER VIEW
+═══════════════════════════════════════════════════════ -->
+        <cluedo-join-player></cluedo-join-player>
+
+        <!-- ═══════════════════════════════════════════════════════
+     SLIDE 20 — INACTIVE PLAYERS VIEW
+═══════════════════════════════════════════════════════ -->
+        <cluedo-inactive-players></cluedo-inactive-players>
+
+        <!-- ═══════════════════════════════════════════════════════
+     SLIDE 21 — ACTIVE PLAYERS VIEW
+═══════════════════════════════════════════════════════ -->
+        <cluedo-active-players></cluedo-active-players>
+
+        <!-- ═══════════════════════════════════════════════════════
+     SLIDE 22 — SECRET PASSAGE
+═══════════════════════════════════════════════════════ -->
+        <cluedo-secret-passage></cluedo-secret-passage>
+
+        <!-- ═══════════════════════════════════════════════════════
+     SLIDE 23 — SUSPECT VIEWS
+═══════════════════════════════════════════════════════ -->
+        <cluedo-suspect></cluedo-suspect>
+
+        <!-- ═══════════════════════════════════════════════════════
+     SLIDE 24 — ACCUSE FINAL
+═══════════════════════════════════════════════════════ -->
+        <cluedo-accuse-final></cluedo-accuse-final>
+
+        <!-- ═══════════════════════════════════════════════════════
+     SLIDE 25 — DEMO
+═══════════════════════════════════════════════════════ -->
+        <cluedo-demo></cluedo-demo>
+
+        <!-- ═══════════════════════════════════════════════════════
+     SLIDE 26 — THANK YOU
+═══════════════════════════════════════════════════════ -->
+        <cluedo-thankyou></cluedo-thankyou>
+      </div>
+
+      <div id="nav">
+        <button class="nav-btn" id="btn-prev" onclick="prevSlide()">
+          &#8592; Prev
+        </button>
+        <span id="counter">1 / 26</span>
+        <button class="nav-btn" id="btn-next" onclick="nextSlide()">
+          Next &#8594;
+        </button>
+        <button
+          class="nav-btn"
+          onclick="toggleFullscreen()"
+          style="margin-left: auto"
+        >
+          &#x26F6; Fullscreen
+        </button>
+      </div>
+      <div id="thumb-strip"></div>
+      <div id="kbd-hint">
+        ← → arrow keys to navigate &nbsp;|&nbsp; F for fullscreen
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════
+     WEB COMPONENTS
+════════════════════════════════════════════════════════════ -->
+<script src="/presentation.js"></script>
+  </body>
+</html>
