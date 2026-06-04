@@ -1,143 +1,141 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cluedo – The Deductives</title>
-    <script src="./presentation.js"></script>
-    <link rel="stylesheet" href="./style.css" />
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <title>Cluedo – The Deductives</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="presentation.js"></script>
+</head>
+<body>
 
-  <body>
-    <main>
-      <!-- 1 -->
-      <section class="slide center lines">
-        <div class="label">CASE FILE 001</div>
-        <div class="stamp">CONFIDENTIAL</div>
-        <h1 class="title typewriter">Cluedo</h1>
-        <p class="subtitle">The Deductives</p>
-        <hr />
-        <p class="list">
-          Mohanthi (BA), Hem Pradeep (QA)<br />
-          Umar, Javed, Rahul, Sagnik, Nitesh, Vismaya
-        </p>
-      </section>
+<div class="presentation">
 
-      <!-- 2 -->
-      <section class="slide hidden lines">
-        <div class="label">CASE OVERVIEW</div>
-        <h1 class="title">Agenda</h1>
-        <ul class="list">
-          <li>Iteration Investigation</li>
-          <li>Story Status</li>
-          <li>Analysis</li>
-          <li>Next Plan</li>
-          <li>Demonstration</li>
-        </ul>
-      </section>
+  <!-- SLIDE 1 -->
+  <section class="slide hero">
+    <div class="content center">
+      <p class="case-label">CASE FILE</p>
+      <h1>Cluedo – The Deductives</h1>
+      <p class="subtitle">An interactive web-based investigation experience</p>
 
-      <!-- 3 -->
-      <section class="slide hidden lines">
-        <div class="label">EVIDENCE LOG</div>
-        <h1 class="title">Progress</h1>
-        <ul class="list">
-          <li>Dice movement – 2 pts</li>
-          <li>Secret passage – 1 pt</li>
-          <li>Suspicion – 2 pts</li>
-          <li>Accusation – 2 pts</li>
-          <li class="highlight">Victory logic implemented</li>
-        </ul>
-      </section>
+      <div class="divider"></div>
 
-      <!-- 4 -->
-      <section class="slide hidden">
-        <div class="label">FORENSICS</div>
-        <h1 class="title">Stats</h1>
-        <ul class="list">
-          <li>Coverage: <span class="highlight">80%</span></li>
-          <li>Backend: 500 LoC</li>
-          <li>Frontend: 300 LoC</li>
-          <li>Tests: 200 LoC</li>
-        </ul>
-      </section>
+      <ul>
+        <li>Inspired by classic Cluedo gameplay</li>
+        <li>Reimagined as a digital deduction system</li>
+        <li>Iteration Two: deeper logic & interaction</li>
+      </ul>
 
-      <!-- 5 -->
-      <section class="slide hidden">
-        <div class="label">SYSTEM DESIGN</div>
-        <h1 class="title">Architecture</h1>
-        <p class="list">MVC with REST APIs</p>
-      </section>
+      <div class="stamp">STATUS: ACTIVE INVESTIGATION</div>
+    </div>
+  </section>
 
-      <!-- 6 -->
-      <section class="slide hidden">
-        <div class="label">ISSUES FOUND</div>
-        <h1 class="title">Code Smells</h1>
-        <ul class="list">
-          <li>Long methods</li>
-          <li>Lazy classes</li>
-          <li>Shotgun surgery</li>
-        </ul>
-      </section>
+  <!-- SLIDE 2 -->
+  <section class="slide split hidden">
+    <div class="left">
+      <h2>The Problem: Static Presentations</h2>
+      <p class="subtitle">Traditional tools slow down storytelling and creativity</p>
+      <ul>
+        <li>Manual slide creation is time-consuming</li>
+        <li>Limited interactivity and narrative flow</li>
+        <li>Breaks immersion in storytelling</li>
+      </ul>
+      <p class="takeaway">Presentation tools shouldn’t interrupt the story.</p>
+    </div>
+    <div class="right visual"></div>
+  </section>
 
-      <!-- 7 -->
-      <section class="slide hidden">
-        <div class="label">DEBT REPORT</div>
-        <h1 class="title">Tech Debt</h1>
-        <ul class="list">
-          <li>No error handling</li>
-          <li>No persistence</li>
-          <li>Single session only</li>
-        </ul>
-      </section>
+  <!-- SLIDE 3 -->
+  <section class="slide split reverse hidden">
+    <div class="left visual"></div>
+    <div class="right">
+      <h2>The Solution: Web-Based Presentation Engine</h2>
+      <p class="subtitle">A seamless, code-driven storytelling platform</p>
+      <ul>
+        <li>HTML-based presentation system</li>
+        <li>Eliminates manual slide design</li>
+        <li>Dynamic and customizable layouts</li>
+      </ul>
+      <p class="takeaway">From static slides to living presentations.</p>
+    </div>
+  </section>
 
-      <!-- 8 -->
-      <section class="slide hidden">
-        <div class="label">TOOLS USED</div>
-        <h1 class="title">Techniques</h1>
-        <ul class="list">
-          <li>Local storage</li>
-          <li>Inkscape</li>
-          <li>Mermaid diagrams</li>
-        </ul>
-      </section>
+  <!-- SLIDE 4 -->
+  <section class="slide grid hidden">
+    <h2>Theme: A Detective’s Case File</h2>
+    <p class="subtitle">Every slide is part of an unfolding investigation</p>
 
-      <!-- 9 -->
-      <section class="slide hidden">
-        <div class="label">INSIGHTS</div>
-        <h1 class="title">Learnings</h1>
-        <ul class="list">
-          <li>Refactoring is crucial</li>
-          <li>Communication matters</li>
-          <li>Planning improves delivery</li>
-        </ul>
-      </section>
+    <div class="grid-3">
+      <div class="card">Dark, moody visual language</div>
+      <div class="card">Evidence-driven storytelling</div>
+      <div class="card">Narrative continuity</div>
+    </div>
 
-      <!-- 10 -->
-      <section class="slide hidden">
-        <div class="label">NEXT CASE</div>
-        <h1 class="title">Iteration Plan</h1>
-        <ul class="list">
-          <li>Lobby system</li>
-          <li>Game log</li>
-          <li>Detective notes</li>
-          <li class="highlight">Total: 10 points</li>
-        </ul>
-      </section>
+    <p class="takeaway">The presentation feels like solving a mystery.</p>
+  </section>
 
-      <!-- 11 -->
-      <section class="slide center hidden">
-        <div class="label">LIVE DEMO</div>
-        <h1 class="title">Demonstration</h1>
-        <p class="subtitle">Uncovering the system in action</p>
-      </section>
+  <!-- SLIDE 5 -->
+  <section class="slide grid hidden">
+    <h2>Iteration Two: Deepening the Investigation</h2>
+    <p class="subtitle">Enhancing logic, interaction, and immersion</p>
 
-      <!-- 12 -->
-      <section class="slide center hidden">
-        <div class="label">CASE CLOSED</div>
-        <div class="stamp">RESOLVED</div>
-        <h1 class="title">Thank You</h1>
-        <p class="subtitle">Questions?</p>
-      </section>
-    </main>
-  </body>
+    <div class="grid-3">
+      <div class="card">Improved deduction mechanics</div>
+      <div class="card">Richer UI/UX interactions</div>
+      <div class="card">Structured narrative flow</div>
+    </div>
+
+    <p class="takeaway">The system evolves from prototype to experience.</p>
+  </section>
+
+  <!-- SLIDE 6 -->
+  <section class="slide split hidden">
+    <div class="left">
+      <h2>Design Philosophy</h2>
+      <p class="subtitle">Clarity, immersion, and narrative first</p>
+      <ul>
+        <li>Minimal but expressive layouts</li>
+        <li>Strict grid and spacing system</li>
+        <li>Visual hierarchy drives attention</li>
+      </ul>
+      <p class="takeaway">Design is invisible, story is everything.</p>
+    </div>
+    <div class="right visual"></div>
+  </section>
+
+  <!-- SLIDE 7 -->
+  <section class="slide grid hidden">
+    <h2>Elements of the Mystery</h2>
+    <p class="subtitle">Core components that drive gameplay</p>
+
+    <div class="grid-3">
+      <div class="card">Suspects, weapons, and rooms</div>
+      <div class="card">Evidence tracking system</div>
+      <div class="card">Deduction logic</div>
+    </div>
+
+    <p class="takeaway">Every element contributes to solving the case.</p>
+  </section>
+
+  <!-- SLIDE 8 -->
+  <section class="slide hero hidden">
+    <div class="content center">
+      <h1>Closing the Case</h1>
+      <p class="subtitle">A new way to build and present ideas</p>
+
+      <div class="divider"></div>
+
+      <ul>
+        <li>Faster creation workflow</li>
+        <li>Stronger storytelling</li>
+        <li>Immersive presentation experience</li>
+      </ul>
+
+      <div class="stamp">CASE CLOSED</div>
+    </div>
+  </section>
+
+</div>
+
+</body>
 </html>
